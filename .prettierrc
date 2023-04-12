@@ -1,0 +1,17 @@
+{
+    "tabWidth": 4,
+    "useTabs": true,
+    "semi": false,
+    "singleQuote": false,
+    "printWidth": 120,
+    "bracketSameLine": true,
+    "bracketSpacing": true,
+    "overrides": [
+      {
+        "files": "*.sol",
+        "options": {
+          "compiler": "0.8.18"
+        }
+      }
+    ]
+}
