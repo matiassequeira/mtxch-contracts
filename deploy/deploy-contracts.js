@@ -1,13 +1,13 @@
 const { ethers } = require("hardhat")
+const provider = ethers.provider
 
 module.exports = async ({ getNamedAccounts }) => {
 	const { deployer } = await getNamedAccounts()
 
-    const wethAddress
-    const allowedNFTAddresses
-    const peggyAddress
+    let wethAddress
+    let allowedNFTAddresses
+    let peggyAddress
     
-    const provider = ethers.getDefaultProvider();
     const network = await provider.getNetwork();
     const chainId = network.chainId;
     
@@ -24,6 +24,7 @@ module.exports = async ({ getNamedAccounts }) => {
         peggyAddress = "0xF955C57f9EA9Dc8781965FEaE0b6A2acE2BAD6f3"
     } else {
         console.log("----- TEST DEPLOY -----, chainId", chainId)
+        return
         wethAddress
         allowedNFTAddresses
         priceFeedAddresses
@@ -33,9 +34,9 @@ module.exports = async ({ getNamedAccounts }) => {
 
 	try {
 		console.log("----- DEPLOY -----")
-		MetaExchange = await ethers.getContractFactory("MetaExchange", deployer)
+		const MetaExchange = await ethers.getContractFactory("MetaExchange", deployer)
 
-		metaExchange = await MetaExchange.deploy(
+		const metaExchange = await MetaExchange.deploy(
             wethAddress,
             allowedNFTAddresses,
             priceFeedAddresses,

@@ -1,5 +1,8 @@
 require("dotenv").config()
 require("hardhat-deploy")
+require("@nomiclabs/hardhat-ethers");
+require("@nomicfoundation/hardhat-toolbox");
+const { ethers } = require("ethers");
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
@@ -10,6 +13,7 @@ require("hardhat-deploy")
 const MAINNET_MNEMONICS = process.env.MAINNET_MNEMONICS || ""
 const TESTNET_MNEMONICS = process.env.TESTNET_MNEMONICS || ""
 const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL || ""
+const POLYGON_RPC_URL = process.env.POLYGON_RPC_URL || ""
 
 
 module.exports = {
@@ -29,6 +33,14 @@ module.exports = {
 			accounts: {
 				mnemonic: TESTNET_MNEMONICS,
 			},
+			blockConfirmations: 6,
+		},
+		polygon: {
+			url: POLYGON_RPC_URL,
+			accounts: {
+				mnemonic: MAINNET_MNEMONICS,
+			},
+			gasPrice: 240000000000,
 			blockConfirmations: 6,
 		},
 	},

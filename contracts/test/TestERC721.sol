@@ -4,6 +4,7 @@ pragma solidity ^0.8.18;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Base64.sol";
 
 contract MyNFTCollection is ERC721, Ownable {
     using Counters for Counters.Counter;
@@ -11,10 +12,7 @@ contract MyNFTCollection is ERC721, Ownable {
 
     mapping(uint256 => string) private _tokenURIs;
 
-    constructor(
-        string memory _name,
-        string memory _token
-    ) ERC721(_name, _token) {}
+    constructor(string memory name, string memory symbol) ERC721(name, symbol) {}
 
     function mintNFT(address _to, string memory tokenURI) public onlyOwner returns (uint256) {
         _tokenIds.increment();
@@ -31,8 +29,23 @@ contract MyNFTCollection is ERC721, Ownable {
         _tokenURIs[tokenId] = _tokenURI;
     }
 
-    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+    function tokenURI(
+        uint256 tokenId)
+     public view virtual override returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
-        return _tokenURIs[tokenId];
+
+        string memory json = Base64.encode(
+			bytes(
+				string(
+					abi.encodePacked(
+						'{"image": "',
+						_tokenURIs[tokenId],
+						'"}'
+					)
+				)
+			)
+		);
+
+		return string(abi.encodePacked("data:application/json;base64,", json));
     }
 }
