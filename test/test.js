@@ -206,7 +206,6 @@ describe("Metaexchange functionality work as expected", function () {
             testWETH = testWETH.connect(lender)
             await testWETH.approve(metaExchange.address, expectedLiquidity)
             
-            
             const mxtchInitialBalance = await testWETH.balanceOf(metaExchange.address)
             metaExchange = metaExchange.connect(lender)
             await metaExchange.acceptOffer(0)

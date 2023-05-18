@@ -1,5 +1,5 @@
 [profile.default]
 src = 'contracts'
-test = 'test'
+test = 'contracts/test'
 out = 'artifacts/contracts'
 libs = ['lib']
